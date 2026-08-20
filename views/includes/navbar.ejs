@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md bg-body-white border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/listings">All Listings</a>
+        <a class="nav-link" href="/listings/new">Add new Listings</a>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+<% if (!currUser) { %>
+
+  <a href="/login" class="btn btn-outline-dark rounded-pill px-3">
+    <i class="bi bi-box-arrow-in-right"></i> Login
+  </a>
+  <a href="/signup" class="btn btn-dark rounded-pill px-3">
+    <i class="bi bi-person-plus"></i> Signup
+  </a>
+<% } else { %>
+<div class="d-flex align-items-center gap-2">
+  <div class="d-flex align-items-center gap-2 border rounded-pill px-3 py-2">
+    <i class="bi bi-person-circle fs-5"></i>
+    <span class="fw-semibold"><%= currUser.username %></span>
+  </div>
+  <a href="/logout" class="btn btn-outline-dark rounded-pill px-3">
+    Logout
+  </a>
+</div>
+<% } %>
+
+    </div>
+  </div>
+</nav>
