@@ -1,4 +1,5 @@
 const Listing = require("../models/listing");
+const geocode = require("../utils/geocode");
 
 //index route
 module.exports.index = async (req, res) => {
@@ -19,8 +20,9 @@ module.exports.showListing = async (req, res) => {
         path: "author",
       },
     });
-  // console.log(listing.owner.username)
-  res.render("listings/show.ejs", { listing });
+    const [longitude, latitude] = await geocode(listing.location);
+
+  res.render("listings/show.ejs", { listing, longitude, latitude });
 };
 
 
