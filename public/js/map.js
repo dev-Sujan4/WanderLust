@@ -24,7 +24,7 @@ const map = new maplibregl.Map({
   },
 
   center: [longitude, latitude],
-  zoom: 13,
+  zoom: 6,
 });
 new maplibregl.Marker()
     .setLngLat([longitude, latitude])
