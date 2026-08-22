@@ -27,7 +27,6 @@ module.exports.showListing = async (req, res) => {
       },
     });
   const [longitude, latitude] = await geocode(listing.location);
-
   res.render("listings/show.ejs", { listing, longitude, latitude });
 };
 

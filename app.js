@@ -16,6 +16,7 @@ const User = require("./models/user.js");
 
 const session= require("express-session")
 const flash = require('connect-flash');
+const { MongoStore } = require("connect-mongo");
 
 
 const listingRouter = require("./routes/listing.js");
@@ -25,10 +26,19 @@ const userRouter = require ("./routes/user.js");
 
 
 main()
-  .catch((err) => console.log(err));
+  // .catch((err) => console.log(err));
 
-async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+  // async function main(){
+  //   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust")
+  // }
+
+async function main() 
+{
+  await mongoose.connect(process.env.ATLAS_DB_URL, {
+  tls: true,
+  tlsAllowInvalidCertificates: false,
+}
+)
 }
 
 
@@ -40,16 +50,29 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 
-const sessionOptions={
-  secret:"mysupersecretcode",
-  resave:false,
-  saveUninitialized:true,
-  cookie :{
-    expires :Date.now()*7*24*60*60*1000,
-    maxAge : 7*24*60*60*1000,
-    httpOnly : true,
-  }
-}
+const store = MongoStore.create({
+  mongoUrl: /*"mongodb://127.0.0.1:27017/wanderlust",*/   process.env.ATLAS_DB_URL,
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+  },
+  touchAfter: 24 * 3600,               // only resave session once per day unless data changes
+});
+
+store.on("error", (err) => {
+  console.log("SESSION STORE ERROR:", err);
+});
+
+const sessionOptions = {
+  store,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+
 
 
 // app.get("/", (req, res) => {
@@ -68,12 +91,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use((req,res,next) =>{
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
-  next()
-})
+app.use((req, res, next) => {
+  res.locals.success = req.flash ? req.flash("success") : [];
+  res.locals.error = req.flash ? req.flash("error") : [];
+  res.locals.currUser = req.user || null;
+  next();
+});
 
 
 app.use("/listings",listingRouter); 
