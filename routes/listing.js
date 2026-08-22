@@ -6,7 +6,7 @@ const Listing = require("../models/listing");
 const Review = require("../models/review");
 const listingController = require("../controllers/listing.js");
 const multer = require("multer");
-const { storage } = require("../cloudconfig.js");
+const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
 
 //index route
