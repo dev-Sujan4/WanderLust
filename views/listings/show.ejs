@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <% if (currUser && listing.owner.toString() === currUser.toString()) { %>
+      <% if (currUser && listing.owner && listing.owner.toString() === currUser.toString()) { %>
         <div class="btns mb-5 d-flex gap-2">
           <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">
             Edit
@@ -90,7 +90,7 @@
                 <p class="starability-result" data-rating="<%= review.rating %>"></p>
                 <p class="card-text"><%= review.comment %></p>
               </div>
-              <% if (currUser && review.author.toString() === currUser.toString()) { %>
+              <% if (currUser && review.author && review.author.toString() === currUser.toString()) { %>
               <form class="mb-3 px-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
                 <button class="btn btn-sm btn-dark">Delete</button>
               </form>
