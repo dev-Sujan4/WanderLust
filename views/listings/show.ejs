@@ -20,7 +20,7 @@
             <%= listing.country %>
           </p>
           <p class="card-text">
-            <strong>Owner:</strong> <%= listing.owner.username %>
+            <strong>Owner:</strong> <%= listing.owner ? listing.owner.username : "Unknown" %>
           </p>
         </div>
       </div>
@@ -86,7 +86,7 @@
           <div class="col">
             <div class="card h-100">
               <div class="card-body">
-                <h5 class="card-title mb-2 mt-2">@<%= review.author.username %></h5>
+                <h5 class="card-title mb-2 mt-2"> @<%= review.author ? review.author.username : "Unknown" %></h5>
                 <p class="starability-result" data-rating="<%= review.rating %>"></p>
                 <p class="card-text"><%= review.comment %></p>
               </div>
