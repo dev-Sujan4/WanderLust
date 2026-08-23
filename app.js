@@ -76,7 +76,7 @@ const sessionOptions = {
 
 
 app.get("/", (req, res) => {
-  res.send("please copy this url and paste it to your browser:   https://wanderlust-5itg.onrender.com/listings");
+  res.render("listings/home.ejs");
 });
 
 
