@@ -105,10 +105,19 @@ app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
+
 // random route handler
 app.all("/{*splat}", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
+
+
+
+
 
 //error handler
 app.use((err, req, res, next) => {
@@ -116,7 +125,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
   res.render("error.ejs", { message });
 });
-
 app.listen(8080, () => {
   console.log("listning");
 });
