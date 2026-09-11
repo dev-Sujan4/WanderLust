@@ -16,7 +16,9 @@ module.exports.index = async (req, res) => {
 
 //show route
 module.exports.showListing = async (req, res) => {
+
   let { id } = req.params;
+
   const listing = await Listing.findById(id)
     .populate("reviews")
     .populate("owner")
@@ -26,10 +28,11 @@ module.exports.showListing = async (req, res) => {
         path: "author",
       },
     });
+
   const [longitude, latitude] = await geocode(listing.location);
+
   res.render("listings/show.ejs", { listing, longitude, latitude });
 };
-
 // new listing route
 module.exports.newListingForm = (req, res) => {
   res.render("listings/new.ejs");

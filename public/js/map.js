@@ -1,5 +1,3 @@
-
-
 const map = new maplibregl.Map({
   container: "map",
 
@@ -26,6 +24,7 @@ const map = new maplibregl.Map({
   center: [longitude, latitude],
   zoom: 6,
 });
+
 new maplibregl.Marker()
-    .setLngLat([longitude, latitude])
-    .addTo(map);
+  .setLngLat([longitude, latitude])
+  .addTo(map);
