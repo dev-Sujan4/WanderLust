@@ -240,7 +240,7 @@ Planned features include:
 
 ## 👨‍💻 Author
 
-**Sujan Singh**
+**Sujan**
 
 GitHub: [dev-Sujan4](https://github.com/dev-Sujan4)
 
